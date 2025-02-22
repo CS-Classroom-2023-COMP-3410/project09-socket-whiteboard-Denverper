@@ -1,4 +1,4 @@
-const io = require('socket.io')(server, {
+const io = require('socket.io')(3000, {
     cors: {
         origin: '*',
         methods: ["GET", "POST"]
@@ -10,16 +10,16 @@ let boardState = [];
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`);
 
-    socket.emit('load-board', boardState);
+    socket.emit('load', boardState);
 
     socket.on('draw', (data) => {
         boardState.push(data);
         socket.broadcast.emit('draw', data);
     });
 
-    socket.on('clear-board', () => {
+    socket.on('clear', () => {
         boardState = [];
-        io.emit('clear-board');
+        io.emit('clear');
     });
 
     socket.on('disconnect', () => {

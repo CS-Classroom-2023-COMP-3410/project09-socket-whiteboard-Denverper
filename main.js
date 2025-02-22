@@ -11,7 +11,7 @@ let x = 0, y = 0;
 
 const socket = io('http://localhost:3000');
 
-socket.on('load-board', (boardState) => {
+socket.on('load', (boardState) => {
     console.log('Loading board state:', boardState);
     boardState.forEach(drawLine);
 });
@@ -21,7 +21,7 @@ socket.on('draw', (data) => {
     drawLine(data);
 });
 
-socket.on('clear-board', () => {
+socket.on('clear', () => {
     console.log('Clear board event received');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
@@ -62,5 +62,5 @@ colorPicker.addEventListener('input', (e) => {
 });
 
 clearButton.addEventListener('click', () => {
-    socket.emit('clear-board');
+    socket.emit('clear');
 });
